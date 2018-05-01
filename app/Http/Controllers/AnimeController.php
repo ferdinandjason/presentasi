@@ -53,9 +53,11 @@ class AnimeController extends Controller
      * @param  \App\Anime  $anime
      * @return \Illuminate\Http\Response
      */
-    public function show(Anime $anime)
+    public function show($id)
     {
-        //
+        //;
+        $anime = Anime::where('id',$id)->first();
+        return view('anime.show',compact('anime'));
     }
 
     /**

@@ -2,6 +2,20 @@
 @section('title')
 	Anime List
 @stop
+@section('css')
+	<style type="text/css">
+		.card{
+			margin: 10px !important;
+		}
+
+		.image img{
+			object-fit: cover; /* Do not scale the image */
+  			object-position: center; /* Center the image within the element */
+  			height: 170px !important;
+			width: 100% !important;
+		}
+	</style>
+@stop
 @section('content')
 	<div class="ui container">
 		<div class="right menu">
@@ -61,8 +75,8 @@
 						<img src="{{$anime->picture}}">
 					</div>
 					<div class="content">
-						<div class="header" id="real_title">{{$anime->title}}</div>
-						<div class="header" id="japanese_title" style="display: none;">{{$anime->japanese_title}}</div>
+						<a href="/anime/{{$anime->id}}"><div class="header" id="real_title">{{$anime->title}}</div></a>
+						<a href="/anime/{{$anime->id}}"><div class="header" id="japanese_title" style="display: none;">{{$anime->japanese_title}}</div></a>
 						<div class="description">
 							{{substr($anime->synopsis,0,100)}}
 						</div>
@@ -81,33 +95,35 @@
 				<?php $counter+=1; ?>
 			@endforeach
 		</div>
-		<div class="ui horizontal pagination menu" style="margin-left: 280px;">
-			<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="{{$animelist->url(1)}}"> << </a>
-			@if($animelist->lastPage()<10)
-				@for($i = 1;$i<=$animelist->lastPage();$i++)
-					<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
-					   href="{{ $animelist->url($i) }}">
-						{{ $i }}
-					</a>
-				@endfor
-			@elseif($animelist->currentPage()<8 )
-				@for($i = 1;$i<=10;$i++)
-					<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
-					   href="{{ $animelist->url($i) }}">
-						{{ $i }}
-					</a>
-				@endfor
-			@else
-				<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="#"> ... </a>
-				@for($i=$animelist->currentPage()-5;$i<=$animelist->currentPage()+5 && $i<$animelist->lastPage();$i++)
-					<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
-					   href="{{ $animelist->url($i) }}">
-						{{ $i }}
-					</a>
-				@endfor
-				<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="#"> ... </a>
-			@endif
-			<a class="item{{($animelist->lastPage() == 1)?' disabled':''}}" href="{{$animelist->url($animelist->lastPage())}}"> >> </a>
+		<div class="ui center aligned segment" style="border:0; box-shadow: none;">
+			<div class="ui horizontal pagination menu">
+				<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="{{$animelist->url(1)}}"> << </a>
+				@if($animelist->lastPage()<10)
+					@for($i = 1;$i<=$animelist->lastPage();$i++)
+						<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
+						   href="{{ $animelist->url($i) }}">
+							{{ $i }}
+						</a>
+					@endfor
+				@elseif($animelist->currentPage()<8 )
+					@for($i = 1;$i<=10;$i++)
+						<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
+						   href="{{ $animelist->url($i) }}">
+							{{ $i }}
+						</a>
+					@endfor
+				@else
+					<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="#"> ... </a>
+					@for($i=$animelist->currentPage()-5;$i<=$animelist->currentPage()+5 && $i<$animelist->lastPage();$i++)
+						<a class="item {{ ($animelist->currentPage() == $i) ? ' active' : '' }}"
+						   href="{{ $animelist->url($i) }}">
+							{{ $i }}
+						</a>
+					@endfor
+					<a class="item{{($animelist->currentPage() == 1)?' disabled':''}}" href="#"> ... </a>
+				@endif
+				<a class="item{{($animelist->lastPage() == 1)?' disabled':''}}" href="{{$animelist->url($animelist->lastPage())}}"> >> </a>
+			</div>
 		</div>
 	</div>
 @stop

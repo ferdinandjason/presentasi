@@ -1,7 +1,7 @@
-composer install
-echo 'Install vendor success!'
+#composer install -vvv
+#echo 'Install vendor success!'
 python3 env-database.py
 php artisan key:generate
 echo 'Key generation success!'
-php artisan migrate
-echo 'Database migration success!'
+#php artisan migrate
+#echo 'Database migration success!'
